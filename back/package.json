@@ -1,0 +1,29 @@
+{
+  "name": "pokedex-version-active-record",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "cd migrations/ && sqitch deploy db:pg:pokemon_versioned && cd ../",
+    "revert": "cd migrations/ && sqitch revert db:pg:pokemon_versioned && cd ../",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joris-villet/pokedex-version-active-record.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joris-villet/pokedex-version-active-record/issues"
+  },
+  "homepage": "https://github.com/joris-villet/pokedex-version-active-record#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^7.18.2",
+    "sequelize": "^5.21.5"
+  }
+}
