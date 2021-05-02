@@ -41,7 +41,7 @@ export default {
    data () {
       return {
          pokemons: [],
-         base_url: "http://localhost:7070/pokemon",
+         base_url: "http://localhost:7070/api",
          show: false,
          searchKey: ''
       }

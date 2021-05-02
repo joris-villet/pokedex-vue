@@ -22,8 +22,6 @@ export default {
 };
 </script>
 
-
-
 <style lang="scss" scoped>
 .title {
   margin: 3rem auto;

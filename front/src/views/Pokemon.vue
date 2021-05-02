@@ -1,46 +1,52 @@
 <template>
    <div>
-
       <transition name="fade">
          <div class="container" v-if="show">
-
             <h1 class="title"> {{ pokemon.nom }} </h1>
             <article>
                <img :src="require(`../assets/img/${pokemon.numero}.png`)" :alt="pokemon.nom" class="pics">
-               <div v-for="(type, index) in types" :key="index">
-                  <router-link :to="{ name: 'Types', params: { typeId: type.type_id, pokemonId: pokemon.id, typeName: type.name}}" class="type">
-                     {{ type.name }} 
-                  </router-link>
-               </div> 
+               <div class="types">
+                  <h3 class="types-title">Pokemon de type:</h3>
+                  <div class="types-buttons">
+                     <div v-for="(type, index) in types" :key="index">
+                        <router-link :to="{ 
+                           name: 'Types', 
+                           params: { 
+                              typeId: type.type_id, 
+                              typeName: type.name
+                              }}" 
+                           class="types-buttons-button" 
+                           :style="{background: type.color}">
+                           {{ type.name }} 
+                        </router-link>
+                     </div> 
+                  </div>
+                  <div class="types-infos">
+                     <p> PV :  <span>{{ pokemon.pv }}</span></p> 
+                     <p> Attaque : <span>{{ pokemon.attaque }}</span> </p>
+                     <p> Défense :  <span>{{ pokemon.defense }}</span></p>
+                     <p> Attaque Spé :  <span>{{ pokemon.attaque_spe }}</span></p>
+                     <p> Défense Spé : <span>{{ pokemon.defense_spe }}</span> </p>
+                     <p> Vitesse :  <span>{{ pokemon.vitesse }}</span></p>
+                  </div>  
+               </div>
             </article>
            
 
-            <div class="infos-powers">
-               <p> PV :  <span>{{ pokemon.pv }}</span></p> 
-               <p> Attaque : <span>{{ pokemon.attaque }}</span> </p>
-               <p> Défense :  <span>{{ pokemon.defense }}</span></p>
-               <p> Attaque Spé :  <span>{{ pokemon.attaque_spe }}</span></p>
-               <p> Défense Spé : <span>{{ pokemon.defense_spe }}</span> </p>
-               <p> Vitesse :  <span>{{ pokemon.vitesse }}</span></p>
-            </div>  
            
          </div>
       </transition>          
    </div>
 </template>
 
-
-
 <script>
-
-const axios = require('axios');
+import axios from 'axios'
 
 export default {
    name: 'Pokemon',
-
    data () {
       return {
-         base_url: "http://localhost:7070/pokemon",
+         base_url: "http://localhost:7070/api",
          pokemon: [],
          types: [],
          show: false
@@ -55,7 +61,6 @@ export default {
         try {
            let pokemonId = parseInt(this.$route.params.pokemonId, 10);
            let response = await axios.get(`${this.base_url}/${pokemonId}`);
-           console.log(response.data);
            this.pokemon = response.data;
            this.show = true;
         }
@@ -65,8 +70,11 @@ export default {
       },
       getTypesByPokemon: async function(){
          try {
-            let pokemonId = parseInt(this.$route.params.pokemonId, 10);
-            let response = await axios.get(`${this.base_url}/type-by-pokemon/${pokemonId}`);
+            const pokemonId = parseInt(this.$route.params.pokemonId, 10);
+            const response = await axios.get(`${this.base_url}/type-by-pokemon/${pokemonId}`);
+            for (const props in response.data) {
+               console.log(`name: ${response.data[props].name}, color: ${response.data[props].color}`)
+            }
             this.types = response.data;
             this.show = true;
          }
@@ -97,39 +105,44 @@ export default {
       }
    }
 
+   .types {
 
-     .type {
-         border-radius: 2px;
-         box-shadow: 1px 1px 2px grey;
-         margin: 5rem 0.2rem;
-         padding: 0.5rem 1rem;
-         background: rgb(255, 114, 114);
-         color: #fff;
-         font-weight: bold;
-         font-size: 0.8rem;
-         text-decoration: none;
-         display: block;
-         height: 10px;
-         line-height: 15px;
-         position: relative;
-         z-index: 1;
-         // &::after {
-         //    content: '';
-         //    position: absolute;
-         //    top: 0;
-         //    left: 0;
-         //    width: 50%;
-         //    height: 100%;
-         //    background: orangered;
-         //    display: block;
-         //    transform-origin: left;
-         //    z-index: 0;
-         //    &:hover {
-         //       width: 100%;
-         //       background: green;
-         //    }
-         // }
+      &-title {
+         margin: 0;
+         margin-bottom: 1rem;
+         text-align: left;
       }
+
+      &-buttons {
+         display: flex;
+
+         &-button {
+            display: block;
+            margin-right: 1rem;
+            height: 30px;
+            width: 80px;
+            line-height: 30px;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 1px 1px 2px grey;
+            border-radius: 2px;
+            font-weight: bold;
+         }
+      }
+
+      &-infos {
+         background: rgb(253, 218, 153);
+         text-align: left;
+
+         p {
+            color: red;
+
+            span {
+               color: yellow;
+            }
+         }
+      }
+   }
 
    .pics {
       width: 70%;
