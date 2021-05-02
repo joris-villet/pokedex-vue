@@ -1,39 +1,56 @@
 <template>
    <div>
       <transition name="fade">
-         <div class="container" v-if="show">
-            <h1 class="title"> {{ pokemon.nom }} </h1>
-            <article>
-               <img :src="require(`../assets/img/${pokemon.numero}.png`)" :alt="pokemon.nom" class="pics">
-               <div class="types">
-                  <h3 class="types-title">Pokemon de type:</h3>
-                  <div class="types-buttons">
-                     <div v-for="(type, index) in types" :key="index">
-                        <router-link :to="{ 
-                           name: 'Types', 
-                           params: { 
-                              typeId: type.type_id, 
-                              typeName: type.name
-                              }}" 
-                           class="types-buttons-button" 
-                           :style="{background: type.color}">
-                           {{ type.name }} 
-                        </router-link>
-                     </div> 
+         <div v-if="show">
+            <section class="container">
+               <h1 class="title"> {{ pokemon.nom }} </h1>
+               <article>
+                  <img :src="require(`../assets/img/${pokemon.numero}.png`)" :alt="pokemon.nom" class="pics">
+                  <div class="types">
+                     <h3 class="types-title">Pokemon de type:</h3>
+                     <div class="types-buttons">
+                        <div v-for="(type, index) in types" :key="index">
+                           <router-link :to="{ 
+                              name: 'Types', 
+                              params: { 
+                                 typeId: type.type_id, 
+                                 typeName: type.name
+                                 }}" 
+                              class="types-buttons-button" 
+                              :style="{background: type.color}">
+                              {{ type.name }} 
+                           </router-link>
+                        </div> 
+                     </div>
+                     <div class="types-infos">
+                        <div class="types-infos-progress">
+                           <p> PV <span>{{ pokemon.pv }}/100:</span></p> 
+                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.pv"></progress>
+                        </div>
+                        <div class="types-infos-progress">
+                           <p> Attaque <span>{{ pokemon.attaque }}/100:</span></p>
+                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.attaque"></progress>
+                        </div>
+                        <div class="types-infos-progress">
+                           <p> Défense <span>{{ pokemon.defense }}/100:</span></p>
+                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.defense"></progress>
+                        </div>
+                        <div class="types-infos-progress">
+                           <p> Attaque Spé <span>{{ pokemon.attaque_spe }}/100:</span></p>
+                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.attaque_spe"></progress>
+                        </div>
+                        <div class="types-infos-progress">
+                           <p> Défense Spé <span>{{ pokemon.defense_spe }}/100:</span></p>
+                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.defense_spe"></progress>
+                        </div>
+                        <div class="types-infos-progress">
+                           <p> Vitesse <span>{{ pokemon.vitesse }}/100:</span></p>
+                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.vitesse"></progress>
+                        </div>
+                     </div>  
                   </div>
-                  <div class="types-infos">
-                     <p> PV :  <span>{{ pokemon.pv }}</span></p> 
-                     <p> Attaque : <span>{{ pokemon.attaque }}</span> </p>
-                     <p> Défense :  <span>{{ pokemon.defense }}</span></p>
-                     <p> Attaque Spé :  <span>{{ pokemon.attaque_spe }}</span></p>
-                     <p> Défense Spé : <span>{{ pokemon.defense_spe }}</span> </p>
-                     <p> Vitesse :  <span>{{ pokemon.vitesse }}</span></p>
-                  </div>  
-               </div>
-            </article>
-           
-
-           
+               </article>
+            </section>
          </div>
       </transition>          
    </div>
@@ -102,14 +119,16 @@ export default {
          display: flex;
          justify-content: space-between;
          padding: 2rem;
+         width: 700px
       }
    }
 
    .types {
+      display: grid;
+      grid-template-rows: 10% 1fr 50%;
 
       &-title {
          margin: 0;
-         margin-bottom: 1rem;
          text-align: left;
       }
 
@@ -131,21 +150,38 @@ export default {
       }
 
       &-infos {
-         background: rgb(253, 218, 153);
          text-align: left;
+         width: 300px;
 
-         p {
-            color: red;
+         &-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            span {
-               color: yellow;
+            p {
+               font-weight: bold;
+               font-size: 0.8rem;
+               color: rgb(111, 146, 175);
+               margin: 0.3rem 0;
+
+               span {
+                  color: rgb(245, 137, 137);
+               }
+            }
+
+            &-bar {
+               height: 8px;
+               border-radius: 5px;
+               overflow: hidden;
+               border: none;
             }
          }
+
       }
    }
 
    .pics {
-      width: 70%;
+      width: 50%;
       height: auto;
       pointer-events: none;
    }

@@ -1,18 +1,18 @@
 <template>
   <div>
-    <h1 class="title">Liste des Pokemons de type : {{ type.name }}</h1>
+    <h1 class="title">Liste des Pokemons de type : <span :style="{color: type.color}">{{ type.name }}</span></h1>
     <transition name="fade">
       <div class="container" v-if="show">
-        <article v-for="(pokemon, index) in pokemons" :key="index">
-          <router-link
+         <article v-for="(pokemon, index) in pokemons" :key="index">
+            <router-link
             :to="{
-              name: 'Pokemon',
-              params: {
-                pokemonName: pokemon.nom.split(' ').join('-'),
-                pokemonId: pokemon.id,
-              },
+               name: 'Pokemon',
+               params: {
+                  pokemonName: pokemon.nom.split(' ').join('-'),
+                  pokemonId: pokemon.id,
+               },
             }"
-          >
+            >
             <h2 class="name">{{ pokemon.nom }}</h2>
             <div class="infos">
               <img
