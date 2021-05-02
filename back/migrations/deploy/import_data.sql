@@ -373,22 +373,22 @@ INSERT INTO "pokemon_type" ("id", "pokemon_numero", "type_id") VALUES
 (645, 151, 12);
 
 INSERT INTO "type" ("id", "name", "color") VALUES
-(1, 'Acier', 'aaaabb'),
-(2, 'Combat', 'bb5544'),
-(3, 'Dragon', '7766ee'),
-(4, 'Eau', '3399ff'),
-(5, 'Électrik', 'ffbb33'),
-(6, 'Feu', 'ff4422'),
-(7, 'Glace', '77ddff'),
-(8, 'Insecte', 'aabb22'),
-(9, 'Normal', 'bbaabb'),
-(10, 'Plante', '77cc55'),
-(11, 'Poison', 'aa5599'),
-(12, 'Psy', 'ff5599'),
-(13, 'Roche', 'bbaa66'),
-(14, 'Sol', 'ddbb55'),
-(15, 'Spectre', '6666bb'),
-(16, 'Ténèbres', '665544'),
-(17, 'Vol', '6699ff');
+(1, 'Acier', '#aaaabb'),
+(2, 'Combat', '#bb5544'),
+(3, 'Dragon', '#7766ee'),
+(4, 'Eau', '#3399ff'),
+(5, 'Électrik', '#ffbb33'),
+(6, 'Feu', '#ff4422'),
+(7, 'Glace', '#77ddff'),
+(8, 'Insecte', '#aabb22'),
+(9, 'Normal', '#bbaabb'),
+(10, 'Plante', '#77cc55'),
+(11, 'Poison', '#aa5599'),
+(12, 'Psy', '#ff5599'),
+(13, 'Roche', '#bbaa66'),
+(14, 'Sol', '#ddbb55'),
+(15, 'Spectre', '#6666bb'),
+(16, 'Ténèbres', '#665544'),
+(17, 'Vol', '#6699ff');
 
 COMMIT;
