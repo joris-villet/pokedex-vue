@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/Home'
+import Pokedex from '@/views/Pokedex'
+import Pokemon from '@/views/Pokemon'
+import Types from '@/views/Types'
 
 Vue.use(VueRouter)
 
@@ -13,20 +16,17 @@ Vue.use(VueRouter)
   {
     path: '/pokedex',
     name: 'Pokedex',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/Pokedex.vue')
+    component: Pokedex
   },
   {
     path: '/pokedex/:pokemonName/:pokemonId',
     name: 'Pokemon',
-    component: () => import('../views/Pokemon.vue')
+    component: Pokemon
   },
   {
     path: '/pokedex/types/:typeName/:typeId',
     name: 'Types',
-    component: () => import('../views/Types.vue')
+    component: Types
   }
 ]
 

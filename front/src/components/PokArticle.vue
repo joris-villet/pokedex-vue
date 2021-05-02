@@ -1,15 +1,15 @@
 <template>
    <div>
-
-      <label>
-         <input v-model="searchKey" type="search" placeholder="Rechercher un pokemon.." autocomplete="off" id="search">
-      </label>
-
+      <SearchPokemon @searchKey="searchPokemon" />
       <transition name="fade">
          <div class="container" v-if="show">
-
             <article v-for="(pokemon, index) in filteredList" :key="index">
-               <router-link :to="{ name: 'Pokemon', params: { pokemonName: pokemon.nom.split(' ').join('-'), pokemonId: pokemon.id}}">
+               <router-link :to="{ 
+                  name: 'Pokemon', 
+                  params: { 
+                     pokemonName: pokemon.nom.split(' ').join('-'), 
+                     pokemonId: pokemon.id}
+               }">
                   <h2 class="name"> {{ pokemon.nom }} </h2>
                   <div class="infos">
                      <img :src="require(`../assets/img/${pokemon.numero}.png`)" :alt="pokemon.nom" class="pics">
@@ -24,21 +24,20 @@
                   </div> 
                </router-link>
             </article> 
-
-
          </div><!-- fin container -->
       </transition>
-
    </div>
 </template>
 
 
 <script>
+import axios from 'axios'
+import SearchPokemon from '@/components/SearchPokemon'
 
-const axios = require('axios');
 
 export default {
    name: 'PokArticle',
+   components: { SearchPokemon },
    data () {
       return {
          pokemons: [],
@@ -58,6 +57,9 @@ export default {
       }
    },
    methods: {
+      searchPokemon(value) {
+         this.searchKey = value;
+      },
       getAllPokemons: async function(){
          try {
             let response = await axios.get(`${this.base_url}/lists`);
@@ -107,20 +109,6 @@ export default {
    .name {
       margin: 0;
    }
-
-   #search {
-      color: grey;
-      font-style: italic;
-      border: 2px solid rgb(255, 174, 144);
-      border-radius: 4px;
-      padding: 0.5rem 1rem;
-      margin: 0.5rem auto;
-      transition: .1s ease-in;
-      &:focus, :active  {
-         border: 5px solid rgb(255, 174, 144);
-      }
-   }
-
 
    .infos {
       display: flex;
