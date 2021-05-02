@@ -24,28 +24,28 @@
                      </div>
                      <div class="types-infos">
                         <div class="types-infos-progress">
-                           <p> PV <span>{{ pokemon.pv }}/100:</span></p> 
-                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.pv"></progress>
+                           <p> PV <span>{{ progress.pokemonPv }}/200:</span></p> 
+                           <progress class="types-infos-progress-bar" max="200" :value="progress.pokemonPv"></progress>
                         </div>
                         <div class="types-infos-progress">
-                           <p> Attaque <span>{{ pokemon.attaque }}/100:</span></p>
-                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.attaque"></progress>
+                           <p> Attaque <span>{{ progress.pokemonAttaque }}/200:</span></p>
+                           <progress class="types-infos-progress-bar" max="200" :value="progress.pokemonAttaque"></progress>
                         </div>
                         <div class="types-infos-progress">
-                           <p> Défense <span>{{ pokemon.defense }}/100:</span></p>
-                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.defense"></progress>
+                           <p> Défense <span>{{ progress.pokemonDefense }}/200:</span></p>
+                           <progress class="types-infos-progress-bar" max="200" :value="progress.pokemonDefense"></progress>
                         </div>
                         <div class="types-infos-progress">
-                           <p> Attaque Spé <span>{{ pokemon.attaque_spe }}/100:</span></p>
-                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.attaque_spe"></progress>
+                           <p> Attaque Spé <span>{{ progress.pokemonAttaqueSpe }}/200:</span></p>
+                           <progress class="types-infos-progress-bar" max="200" :value="progress.pokemonAttaqueSpe"></progress>
                         </div>
                         <div class="types-infos-progress">
-                           <p> Défense Spé <span>{{ pokemon.defense_spe }}/100:</span></p>
-                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.defense_spe"></progress>
+                           <p> Défense Spé <span>{{ progress.pokemonDefenseSpe }}/200:</span></p>
+                           <progress class="types-infos-progress-bar" max="200" :value="progress.pokemonDefenseSpe"></progress>
                         </div>
                         <div class="types-infos-progress">
-                           <p> Vitesse <span>{{ pokemon.vitesse }}/100:</span></p>
-                           <progress class="types-infos-progress-bar" max="100" :value="pokemon.vitesse"></progress>
+                           <p> Vitesse <span>{{ progress.pokemonVitesse }}/200:</span></p>
+                           <progress class="types-infos-progress-bar" max="200" :value="progress.pokemonVitesse"></progress>
                         </div>
                      </div>  
                   </div>
@@ -66,12 +66,23 @@ export default {
          base_url: "http://localhost:7070/api",
          pokemon: [],
          types: [],
-         show: false
+         show: false,
+         progress: {
+            pokemonPv: 0,
+            pokemonAttaque: 0,
+            pokemonDefense: 0,
+            pokemonAttaqueSpe: 0,
+            pokemonDefenseSpe: 0,
+            pokemonVitesse: 0
+         }
       }
    },
    created () {
       this.getOnePokemon();
       this.getTypesByPokemon();
+      setTimeout(() => {
+         this.animProgressBar()
+      },700)
    },
    methods: {
      getOnePokemon: async function(){
@@ -89,17 +100,24 @@ export default {
          try {
             const pokemonId = parseInt(this.$route.params.pokemonId, 10);
             const response = await axios.get(`${this.base_url}/type-by-pokemon/${pokemonId}`);
-            for (const props in response.data) {
-               console.log(`name: ${response.data[props].name}, color: ${response.data[props].color}`)
-            }
             this.types = response.data;
             this.show = true;
          }
          catch (error) {
             console.log(error);
          }
+      },
+      animProgressBar() {
+         let timer = setInterval(() => {
+            if (this.progress.pokemonPv < this.pokemon.pv) this.progress.pokemonPv++;
+            else if (this.progress.pokemonAttaque < this.pokemon.attaque) this.progress.pokemonAttaque++;
+            else if (this.progress.pokemonDefense < this.pokemon.defense) this.progress.pokemonDefense++;
+            else if (this.progress.pokemonAttaqueSpe < this.pokemon.attaque_spe) this.progress.pokemonAttaqueSpe++;
+            else if (this.progress.pokemonDefenseSpe < this.pokemon.defense_spe) this.progress.pokemonDefenseSpe++;
+            else if (this.progress.pokemonVitesse < this.pokemon.vitesse) this.progress.pokemonVitesse++;
+            else clearInterval(timer)
+         }, 5);
       }
-
    }
 }
 </script>
