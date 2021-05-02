@@ -110,12 +110,11 @@ export default {
       animProgressBar() {
          let timer = setInterval(() => {
             if (this.progress.pokemonPv < this.pokemon.pv) this.progress.pokemonPv++;
-            else if (this.progress.pokemonAttaque < this.pokemon.attaque) this.progress.pokemonAttaque++;
-            else if (this.progress.pokemonDefense < this.pokemon.defense) this.progress.pokemonDefense++;
-            else if (this.progress.pokemonAttaqueSpe < this.pokemon.attaque_spe) this.progress.pokemonAttaqueSpe++;
-            else if (this.progress.pokemonDefenseSpe < this.pokemon.defense_spe) this.progress.pokemonDefenseSpe++;
-            else if (this.progress.pokemonVitesse < this.pokemon.vitesse) this.progress.pokemonVitesse++;
-            else clearInterval(timer)
+            if (this.progress.pokemonAttaque < this.pokemon.attaque) this.progress.pokemonAttaque++;
+            if (this.progress.pokemonDefense < this.pokemon.defense) this.progress.pokemonDefense++;
+            if (this.progress.pokemonAttaqueSpe < this.pokemon.attaque_spe) this.progress.pokemonAttaqueSpe++;
+            if (this.progress.pokemonDefenseSpe < this.pokemon.defense_spe) this.progress.pokemonDefenseSpe++;
+            if (this.progress.pokemonVitesse < this.pokemon.vitesse) this.progress.pokemonVitesse++;
          }, 5);
       }
    }
